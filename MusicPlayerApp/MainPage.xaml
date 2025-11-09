@@ -1,32 +1,119 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MusicPlayerApp.MainPage">
+             x:Class="MusicPlayerApp.MainPage"
+             Title="Музыкальный плеер">
 
-	<VerticalStackLayout Padding="30" Spacing="20">
-		<Label x:Name="nameLabel" FontSize="22" HorizontalOptions="Center" />
+	<Grid RowDefinitions="Auto,*,Auto,Auto,Auto" 
+          ColumnDefinitions="*"
+          Padding="20"
+          RowSpacing="15">
 
-		
+		<!-- Заголовок трека -->
+		<Label x:Name="titleLabel" 
+               Grid.Row="0"
+               Text="Выберите музыку"
+               FontSize="18"
+               FontAttributes="Bold"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"
+               TextColor="{DynamicResource Primary}"/>
 
-		<!-- Прогресс-бар с перемоткой -->
-		<Grid VerticalOptions="Center">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
+		<!-- MediaElement для воспроизведения -->
+		<MediaElement x:Name="_media"
+                     Grid.Row="1"
+                     BackgroundColor="Transparent" />
 
-			<Slider x:Name="positionSlider"
-                    Grid.Row="0"
+		<!-- Прогресс-бар -->
+		<Grid Grid.Row="2" 
+              ColumnDefinitions="Auto,*,Auto"
+              VerticalOptions="Center"
+              ColumnSpacing="10">
+
+			<Label x:Name="currentTimeLabel"
+                   Grid.Column="0"
+                   Text="0:00"
+                   FontSize="14"
+                   VerticalTextAlignment="Center"
+                   TextColor="{DynamicResource Gray500}"/>
+
+			<Slider x:Name="progressSlider"
+                    Grid.Column="1"
                     Minimum="0"
                     Maximum="1"
-                    ValueChanged="OnPositionSliderValueChanged" />
+                    ThumbColor="{DynamicResource Primary}"
+                    MinimumTrackColor="{DynamicResource Primary}"
+                    MaximumTrackColor="{DynamicResource Gray200}"
+                    HeightRequest="20"/>
 
-			<Label x:Name="timeLabel"
-                   Grid.Row="1"
-                   HorizontalOptions="Center"
-                   FontSize="12" />
+			<Label x:Name="totalTimeLabel"
+                   Grid.Column="2"
+                   Text="0:00"
+                   FontSize="14"
+                   VerticalTextAlignment="Center"
+                   TextColor="{DynamicResource Gray500}"/>
 		</Grid>
 
-		<!-- Остальные кнопки будут добавлены в коде -->
-	</VerticalStackLayout>
+		<!-- Кнопки управления -->
+		<Grid Grid.Row="3"
+              ColumnDefinitions="*,*,*,*,*"
+              ColumnSpacing="15"
+              VerticalOptions="Center">
+
+			<Button x:Name="rewind15Btn"
+                    Grid.Column="0"
+                    Text="↺15"
+                    FontSize="14"
+                    CornerRadius="20"
+                    HeightRequest="40"/>
+
+			<Button x:Name="previousBtn"
+                    Grid.Column="1"
+                    Text="⏮"
+                    FontSize="16"
+                    CornerRadius="25"
+                    HeightRequest="50"/>
+
+			<Button x:Name="playPauseBtn"
+                    Grid.Column="2"
+                    Text="▶"
+                    FontSize="18"
+                    CornerRadius="30"
+                    HeightRequest="60"
+                    BackgroundColor="{DynamicResource Primary}"
+                    TextColor="White"/>
+
+			<Button x:Name="nextBtn"
+                    Grid.Column="3"
+                    Text="⏭"
+                    FontSize="16"
+                    CornerRadius="25"
+                    HeightRequest="50"/>
+
+			<Button x:Name="forward30Btn"
+                    Grid.Column="4"
+                    Text="↻30"
+                    FontSize="14"
+                    CornerRadius="20"
+                    HeightRequest="40"/>
+		</Grid>
+
+		<!-- Нижняя панель -->
+		<Grid Grid.Row="4"
+              ColumnDefinitions="*,*"
+              ColumnSpacing="10">
+
+			<Button x:Name="playlistBtn"
+                    Grid.Column="0"
+                    Text="📋 Плейлист"
+                    CornerRadius="10"
+                    HeightRequest="40"/>
+
+			<Button x:Name="selectMusicBtn"
+                    Grid.Column="1"
+                    Text="🎵 Выбрать музыку"
+                    CornerRadius="10"
+                    HeightRequest="40"/>
+		</Grid>
+	</Grid>
 </ContentPage>
