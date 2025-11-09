@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 
-namespace MusicPlayerApp;
+using MusicPlayerApp;
 
 public static class MauiProgram
 {
@@ -9,8 +9,9 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.UseMauiCommunityToolkit()
-			.UseMauiCommunityToolkitMediaElement();
+			.UseMauiCommunityToolkit()  // Для toolkit
+			.UseMauiCommunityToolkitMediaElement();  // Для MediaElement
+
 		return builder.Build();
 	}
 }

@@ -44,15 +44,6 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-		<MauiIcon Include="Resources\drawable\ic_forward.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</MauiIcon>
-		<MauiIcon Include="Resources\drawable\ic_music.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</MauiIcon>
-		<MauiIcon Include="Resources\drawable\ic_rewind.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</MauiIcon>
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -73,6 +64,24 @@
 		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="6.1.3" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+	  <PackageReference Include="Xam.Plugins.Android.ExoPlayer">
+	    <Version>2.19.1</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xam.Plugins.Android.ExoPlayer.Core">
+	    <Version>2.19.1</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xam.Plugins.Android.ExoPlayer.Dash">
+	    <Version>2.19.1</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xam.Plugins.Android.ExoPlayer.Hls">
+	    <Version>2.19.1</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xam.Plugins.Android.ExoPlayer.UI">
+	    <Version>2.19.1</Version>
+	  </PackageReference>
 	</ItemGroup>
 
 </Project>

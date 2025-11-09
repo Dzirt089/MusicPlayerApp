@@ -1,6 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MusicPlayerClean.MainPage">
-	<!-- UI строится в коде -->
+             x:Class="MusicPlayerApp.MainPage">
+
+	<VerticalStackLayout Padding="30" Spacing="20">
+		<Label x:Name="nameLabel" FontSize="22" HorizontalOptions="Center" />
+
+		
+
+		<!-- Прогресс-бар с перемоткой -->
+		<Grid VerticalOptions="Center">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
+			<Slider x:Name="positionSlider"
+                    Grid.Row="0"
+                    Minimum="0"
+                    Maximum="1"
+                    ValueChanged="OnPositionSliderValueChanged" />
+
+			<Label x:Name="timeLabel"
+                   Grid.Row="1"
+                   HorizontalOptions="Center"
+                   FontSize="12" />
+		</Grid>
+
+		<!-- Остальные кнопки будут добавлены в коде -->
+	</VerticalStackLayout>
 </ContentPage>
