@@ -7,7 +7,8 @@
 	<Grid RowDefinitions="Auto,*,Auto,Auto,Auto" 
           ColumnDefinitions="*"
           Padding="20"
-          RowSpacing="15">
+          RowSpacing="15"
+          x:Name="mainGrid">
 
 		<!-- Заголовок трека -->
 		<Label x:Name="titleLabel" 
@@ -17,12 +18,7 @@
                FontAttributes="Bold"
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center"
-               TextColor="{DynamicResource Primary}"/>
-
-		<!-- MediaElement для воспроизведения -->
-		<MediaElement x:Name="_media"
-                     Grid.Row="1"
-                     BackgroundColor="Transparent" />
+               TextColor="{DynamicResource Primary}"/>		
 
 		<!-- Прогресс-бар -->
 		<Grid Grid.Row="2" 
@@ -115,5 +111,8 @@
                     CornerRadius="10"
                     HeightRequest="40"/>
 		</Grid>
+		<!-- Скрытый MediaElement контейнер -->
+		<Border x:Name="mediaContainer"
+                IsVisible="False"/>
 	</Grid>
 </ContentPage>

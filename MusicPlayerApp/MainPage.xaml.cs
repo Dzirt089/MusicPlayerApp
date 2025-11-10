@@ -7,9 +7,10 @@ namespace MusicPlayerApp;
 
 public partial class MainPage : ContentPage
 {
-	public MediaElement _media { get; set; } = new();
+	private readonly MediaElement _media;
 	private readonly List<string> _playlist = new();
 	private int _currentIndex = -1;
+	private bool _isUserSeeking = false;
 
 	public List<string> Playlist => _playlist;
 	public int CurrentIndex => _currentIndex;
@@ -17,6 +18,18 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
+
+		// Создаем MediaElement программно
+		_media = new MediaElement
+		{
+			BackgroundColor = Colors.Transparent,
+			HorizontalOptions = LayoutOptions.Fill,
+			VerticalOptions = LayoutOptions.Fill
+		};
+
+		// Добавляем MediaElement в контейнер
+		mediaContainer.Content = _media;
+
 		InitializeEventHandlers();
 
 		// ВОССТАНАВЛИВАЕМ ПОСЛЕДНИЙ ПЛЕЙЛИСТ
@@ -37,14 +50,14 @@ public partial class MainPage : ContentPage
 		base.OnAppearing();
 
 #if ANDROID
-		try
-		{
-			LockScreenManager.Init(this);
-		}
-		catch (InvalidOperationException ex)
-		{
-			Debug.WriteLine($"LockScreenManager init failed: {ex.Message}");
-		}
+        try
+        {
+            LockScreenManager.Init(this);
+        }
+        catch (InvalidOperationException ex)
+        {
+            Debug.WriteLine($"LockScreenManager init failed: {ex.Message}");
+        }
 #endif
 	}
 
@@ -75,8 +88,6 @@ public partial class MainPage : ContentPage
 			SavePosition();
 		};
 	}
-
-	private bool _isUserSeeking = false;
 
 	private void OnMediaFailed(object sender, MediaFailedEventArgs e)
 	{
@@ -152,7 +163,7 @@ public partial class MainPage : ContentPage
 			_media.Play();
 
 #if ANDROID
-			LockScreenManager.Update(title: name);
+            LockScreenManager.Update(title: name);
 #endif
 
 			// СОХРАНЯЕМ ПОСЛЕДНИЙ ТРЕК
@@ -190,8 +201,8 @@ public partial class MainPage : ContentPage
 			}
 
 #if ANDROID
-			if (_media.CurrentState == MediaElementState.Playing)
-				LockScreenManager.UpdatePosition(e.Position);
+            if (_media.CurrentState == MediaElementState.Playing)
+                LockScreenManager.UpdatePosition(e.Position);
 #endif
 
 			// Авто-сохранение каждые 5 секунд
@@ -288,6 +299,15 @@ public partial class MainPage : ContentPage
 		LoadTrack(_currentIndex);
 	}
 
+	public void PlayTrack(int index)
+	{
+		if (index >= 0 && index < _playlist.Count)
+		{
+			_currentIndex = index;
+			LoadTrack(index);
+		}
+	}
+
 	private async Task ShowPlaylist()
 	{
 		if (_playlist.Count == 0)
@@ -305,12 +325,26 @@ public partial class MainPage : ContentPage
 			Preferences.Set("LastPosition", (long)_media.Position.TotalMilliseconds);
 		}
 	}
-	public void PlayTrack(int index)
+
+	public void ClearPlaylistData()
 	{
-		if (index >= 0 && index < _playlist.Count)
-		{
-			_currentIndex = index;
-			LoadTrack(index);
-		}
+		_playlist.Clear();
+		_currentIndex = -1;
+
+		//Очистка настроек
+		Preferences.Remove("LastPlaylist");
+		Preferences.Remove("LastIndex");
+		Preferences.Remove("LastPath");
+		Preferences.Remove("LastPosition");
+
+		// Сбрасываем интерфейс
+		titleLabel.Text = "Выберите музыку";
+		currentTimeLabel.Text = "0:00";
+		totalTimeLabel.Text = "0:00";
+		progressSlider.Value = 0;
+
+		// Останавливаем воспроизведение
+		_media.Stop();
+		UpdatePlayPauseButton();
 	}
 }

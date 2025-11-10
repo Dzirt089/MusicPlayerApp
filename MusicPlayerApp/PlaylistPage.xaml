@@ -4,7 +4,7 @@
              x:Class="MusicPlayerApp.PlaylistPage"
              Title="Плейлист">
 
-	<Grid RowDefinitions="Auto,*,Auto">
+	<Grid RowDefinitions="Auto, *, Auto, Auto">
 
 		<!-- Заголовок -->
 		<Label Grid.Row="0"
@@ -52,7 +52,16 @@
                 Text="Назад"
                 CornerRadius="10"
                 HeightRequest="45"
-                Margin="20"
+                Margin="10"
                 Clicked="OnBackClicked"/>
+
+		<Button Grid.Row="3"
+                Text="Очистить плейлист"
+                CornerRadius="10"
+                HeightRequest="45"
+                Margin="10"
+                Clicked="OnClearPlaylistClicked"
+                BackgroundColor="#FF6B6B"
+                TextColor="White"/>
 	</Grid>
 </ContentPage>

@@ -52,4 +52,29 @@ public partial class PlaylistPage : ContentPage
 	{
 		Navigation.PopAsync();
 	}
+
+	private async Task Button_Clicked(object sender, EventArgs e)
+	{
+		bool result = await DisplayAlert("Очистка плейлиста",
+			"Вы уверены, что хотите очистить весь плейлист?",
+			"Да",
+			"Нет");
+
+		if (result)
+		{
+			// Очищаем плейлист в MainPage
+			_mainPage.Playlist.Clear();
+			_mainPage.ClearPlaylistData();
+
+			// Очищаем локальный список
+			_playlistItems.Clear();
+			playlistCollection.ItemsSource = null;
+
+			// Показываем сообщение
+			await DisplayAlert("Плейлист", "Плейлист очищен", "OK");
+
+			// Возвращаемся на главную страницу
+			Navigation.PopAsync();
+		}
+	}
 }
